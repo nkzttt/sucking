@@ -1,39 +1,34 @@
 <template>
   <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        app
-      </h1>
-      <h2 class="subtitle">
-
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+    <div class="header">
+      <total :count="3" :value="10" />
+      <ul class="items">
+        <li class="items__title"></li>
+        <li class="items__title">授乳</li>
+        <li class="items__title">搾乳</li>
+        <li class="items__title">ミルク</li>
+      </ul>
     </div>
+    <div class="main">
+      <notes />
+    </div>
+    <actions :on-click="onClick" />
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Total from '~/components/Total.vue'
+import Notes from '~/components/Notes.vue'
+import Actions from '~/components/Actions.vue'
 
 export default {
   components: {
-    Logo
+    Total,
+    Notes,
+    Actions,
+  },
+  methods: {
+    onClick: () => alert('hello')
   }
 }
 </script>
