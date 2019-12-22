@@ -1,12 +1,13 @@
 <template>
-  <p class="total">
-    今日は
-    <span class="total__count">{{count}}</span>
-    回、
-    <span class="total__value">{{value}}</span>
-    ml
-    あげました。
-  </p>
+  <div class="componentRootContainer">
+    <p class="total">
+      今日は
+      <span class="total__count">{{count}}回</span>
+      で、合計
+      <span class="total__value">{{value}}ml</span>
+      あげました。
+    </p>
+  </div>
 </template>
 
 <script>
@@ -16,16 +17,13 @@
 </script>
 
 <style lang="scss" scoped>
-.NuxtLogo {
-  animation: 1s appear;
-}
-
-@keyframes appear {
-  0% {
-    opacity: 0;
+  .total {
+    width: 100%;
+    text-align: center;
+    &__value,
+    &__count {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
   }
-  100% {
-    opacity: 1;
-  }
-}
 </style>

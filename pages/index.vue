@@ -1,18 +1,26 @@
 <template>
-  <div class="container">
+  <div>
     <div class="header">
-      <total :count="3" :value="10" />
-      <ul class="items">
-        <li class="items__title"></li>
-        <li class="items__title">授乳</li>
-        <li class="items__title">搾乳</li>
-        <li class="items__title">ミルク</li>
-      </ul>
+      <div class="header__centeringContainer">
+        <div class="header__total">
+          <total :count="3" :value="10" />
+        </div>
+        <ul class="items">
+          <li class="items__title"></li>
+          <li class="items__title">授乳</li>
+          <li class="items__title">搾乳</li>
+          <li class="items__title">ミルク</li>
+        </ul>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="actions__centeringContainer">
+        <actions :on-click="onClick" />
+      </div>
     </div>
     <div class="main">
       <notes />
     </div>
-    <actions :on-click="onClick" />
   </div>
 </template>
 
@@ -33,35 +41,48 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
+<style lang="scss" scoped>
+  $HEADER_HEIGHT: 80px;
+  $ACTIONS_HEIGHT: 60px;
+  .header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: $HEADER_HEIGHT;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-bottom: solid 2px var(--COLOR_BORDER);
+    &__centeringContainer {
+      width: 100%;
+    }
+    &__total {
+      margin-bottom: 15px;
+    }
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: $ACTIONS_HEIGHT;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    &__centeringContainer {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .main {
+    padding: $HEADER_HEIGHT 0 $ACTIONS_HEIGHT;
+    overflow: scroll;
+  }
+  .items {
+    display: flex;
+    width: 100%;
+    &__title {
+      width: 25%;
+      text-align: center;
+    }
+  }
 </style>
