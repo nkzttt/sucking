@@ -6,7 +6,7 @@
         app
       </h1>
       <h2 class="subtitle">
-        
+
       </h2>
       <div class="links">
         <a
@@ -38,7 +38,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .container {
   margin: 0 auto;
   min-height: 100vh;
