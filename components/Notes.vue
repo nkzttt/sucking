@@ -1,45 +1,72 @@
 <template>
   <div class="componentRootContainer">
-    <table class="note">
-      <tbody>
-      <tr>
-        <td>9</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>10</td>
-        <td>0</td>
-        <td>10</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>11</td>
-        <td>10</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>12</td>
-        <td>10</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-      </tbody>
-    </table>
+    <ul class="note">
+      <li class="note__col">
+        <template  v-for="hour in hours">
+          <p class="note__cell note__cell--time" v-for="minute in minutes">{{hour}}:{{padZero(minute)}}</p>
+        </template>
+      </li>
+      <li class="note__col">
+        <template  v-for="hour in hours">
+          <p class="note__cell" v-for="minute in minutes" @click.prevent="filteredOnClickCell({hour, minute, type: 'direct'})">0</p>
+        </template>
+      </li>
+      <li class="note__col">
+        <template  v-for="hour in hours">
+          <p class="note__cell" v-for="minute in minutes" @click.prevent="filteredOnClickCell({hour, minute, type: 'stacked'})">0</p>
+        </template>
+      </li>
+      <li class="note__col">
+        <template  v-for="hour in hours">
+          <p class="note__cell" v-for="minute in minutes" @click.prevent="filteredOnClickCell({hour, minute, type: 'milk'})">0</p>
+        </template>
+      </li>
+    </ul>
   </div>
 </template>
 
+<script>
+  export default {
+    props: {
+      onClickCell: Function,
+    },
+    data: () => ({
+      hours: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5],
+      minutes: [0,15,30,45],
+    }),
+    methods: {
+      filteredOnClickCell(data) {
+        if (typeof this.onClickCell === 'function') this.onClickCell(data);
+      },
+      padZero(num) {
+        return num.toString().length === 1 ? `${num}0` : num;
+      }
+    }
+  }
+</script>
+
 <style lang="scss" scoped>
   .note {
+    display: flex;
     width: 100%;
-    border-collapse: collapse;
-    td {
-      padding: 10px;
-      border: solid 1px var(--COLOR_BORDER);
+    &__col {
+      width: 25%;
+      & + & {
+        border-left: solid 1px var(--COLOR_BORDER);
+      }
+    }
+    &__cell {
+      padding: 0 10px;
       font-size: 1.2rem;
       text-align: right;
+      line-height: 50px;
+      & + & {
+        border-top: solid 1px var(--COLOR_BORDER);
+      }
+      &--time {
+        background-color: #f5f5f5;
+        font-size: 1rem;
+      }
     }
   }
 </style>

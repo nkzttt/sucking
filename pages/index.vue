@@ -15,11 +15,11 @@
     </div>
     <div class="actions">
       <div class="actions__centeringContainer">
-        <actions :on-click="onClick" />
+        <actions :on-click-action="onClickAction" />
       </div>
     </div>
     <div class="main">
-      <notes />
+      <notes :on-click-cell="onClickCell" />
     </div>
   </div>
 </template>
@@ -36,7 +36,12 @@ export default {
     Actions,
   },
   methods: {
-    onClick: () => alert('hello')
+    onClickAction(type) {
+      console.log(type);
+    },
+    onClickCell({hour, minute, type}) {
+      console.log({hour, minute, type});
+    }
   }
 }
 </script>
@@ -52,7 +57,8 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    border-bottom: solid 2px var(--COLOR_BORDER);
+    border-bottom: solid 3px var(--COLOR_BORDER);
+    background-color: #fff;
     &__centeringContainer {
       width: 100%;
     }

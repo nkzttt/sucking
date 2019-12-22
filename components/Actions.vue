@@ -1,10 +1,10 @@
 <template>
   <div class="componentRootContainer">
     <ul class="actions">
-      <li class="actions__item actions__item--clear" v-on:click.prevent="filteredOnClick">X</li>
-      <li class="actions__item">-</li>
-      <li class="actions__item">+</li>
-      <li class="actions__item">++</li>
+      <li class="actions__item actions__item--clear" @click.prevent="filteredOnClickAction('clear')">X</li>
+      <li class="actions__item" @click.prevent="filteredOnClickAction('decrease')">-</li>
+      <li class="actions__item" @click.prevent="filteredOnClickAction('increase')">+</li>
+      <li class="actions__item" @click.prevent="filteredOnClickAction('moreIncrease')">++</li>
     </ul>
   </div>
 </template>
@@ -12,11 +12,11 @@
 <script>
   export default {
     props: {
-      onClick: Function
+      onClickAction: Function
     },
     methods: {
-      filteredOnClick() {
-        if (typeof this.onClick === 'function') this.onClick();
+      filteredOnClickAction(type) {
+        if (typeof this.onClickAction === 'function') this.onClickAction(type);
       }
     },
   }
