@@ -19,7 +19,7 @@
             v-for="minute in minutes"
             @click.prevent="filteredOnClickCell({ hour, minute, type: 'direct' })"
           >
-            0
+            {{getValue({ hour, minute, type: 'direct' })}}
           </p>
         </template>
       </li>
@@ -31,7 +31,7 @@
             v-for="minute in minutes"
             @click.prevent="filteredOnClickCell({ hour, minute, type: 'stacked' })"
           >
-            0
+            {{getValue({ hour, minute, type: 'stacked' })}}
           </p>
         </template>
       </li>
@@ -43,7 +43,7 @@
             v-for="minute in minutes"
             @click.prevent="filteredOnClickCell({ hour, minute, type: 'milk' })"
           >
-            0
+            {{getValue({ hour, minute, type: 'milk' })}}
           </p>
         </template>
       </li>
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   export default {
     props: {
       onClickCell: Function,
@@ -60,6 +61,10 @@
       activeData: null,
       hours: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5],
       minutes: [0,15,30,45],
+    }),
+    computed: mapState({
+      dateStr: state => state.store.dateStr,
+      notes: state => state.store.notes,
     }),
     methods: {
       filteredOnClickCell(data) {
@@ -74,6 +79,13 @@
         return data.hour === this.activeData.hour &&
           data.minute === this.activeData.minute &&
           data.type === this.activeData.type;
+      },
+      getValue({ hour,minute, type }) {
+        try {
+          const value = this.notes[this.dateStr][hour][minute][type];
+          return value || 0;
+        } catch (e) {}
+        return 0;
       },
     }
   }
@@ -90,6 +102,7 @@
       }
     }
     &__cell {
+      height: 50px;
       padding: 0 10px;
       font-size: 1.2rem;
       text-align: right;
