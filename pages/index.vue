@@ -1,10 +1,13 @@
 <template>
   <div>
     <div class="header">
-      <div class="header__centeringContainer">
-        <div class="header__total">
-          <total :count="3" :value="10" />
-        </div>
+      <div class="header__date">
+        <date />
+      </div>
+      <div class="header__total">
+        <total :count="3" :value="10" />
+      </div>
+      <div class="header__items">
         <ul class="items">
           <li class="items__title"></li>
           <li class="items__title">授乳</li>
@@ -25,12 +28,14 @@
 </template>
 
 <script>
+import Date from '~/components/Date.vue'
 import Total from '~/components/Total.vue'
 import Notes from '~/components/Notes.vue'
 import Actions from '~/components/Actions.vue'
 
 export default {
   components: {
+    Date,
     Total,
     Notes,
     Actions,
@@ -47,23 +52,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  $HEADER_HEIGHT: 80px;
+  $HEADER_HEIGHT: 100px;
   $ACTIONS_HEIGHT: 60px;
   .header {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     width: 100%;
     height: $HEADER_HEIGHT;
     position: fixed;
     top: 0;
     left: 0;
-    border-bottom: solid 3px var(--COLOR_BORDER);
     background-color: #fff;
-    &__centeringContainer {
+    &__date,
+    &__total,
+    &__items {
+      display: flex;
+      align-items: center;
       width: 100%;
     }
-    &__total {
-      margin-bottom: 15px;
+    &__items {
+      background-color: #ddd;
     }
   }
   .actions {
