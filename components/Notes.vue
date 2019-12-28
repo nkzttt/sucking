@@ -3,22 +3,48 @@
     <ul class="note">
       <li class="note__col">
         <template  v-for="hour in hours">
-          <p class="note__cell note__cell--time" v-for="minute in minutes">{{hour}}:{{padZero(minute)}}</p>
+          <p
+            class="note__cell note__cell--time"
+            v-for="minute in minutes"
+          >
+            {{hour}}:{{padZero(minute)}}
+          </p>
         </template>
       </li>
       <li class="note__col">
         <template  v-for="hour in hours">
-          <p class="note__cell" v-for="minute in minutes" @click.prevent="filteredOnClickCell({hour, minute, type: 'direct'})">0</p>
+          <p
+            class="note__cell"
+            :class="{ 'is-active': matchedData({ hour, minute, type: 'direct' }) }"
+            v-for="minute in minutes"
+            @click.prevent="filteredOnClickCell({ hour, minute, type: 'direct' })"
+          >
+            0
+          </p>
         </template>
       </li>
       <li class="note__col">
         <template  v-for="hour in hours">
-          <p class="note__cell" v-for="minute in minutes" @click.prevent="filteredOnClickCell({hour, minute, type: 'stacked'})">0</p>
+          <p
+            class="note__cell"
+            :class="{ 'is-active': matchedData({ hour, minute, type: 'stacked' }) }"
+            v-for="minute in minutes"
+            @click.prevent="filteredOnClickCell({ hour, minute, type: 'stacked' })"
+          >
+            0
+          </p>
         </template>
       </li>
       <li class="note__col">
         <template  v-for="hour in hours">
-          <p class="note__cell" v-for="minute in minutes" @click.prevent="filteredOnClickCell({hour, minute, type: 'milk'})">0</p>
+          <p
+            class="note__cell"
+            :class="{ 'is-active': matchedData({ hour, minute, type: 'milk' }) }"
+            v-for="minute in minutes"
+            @click.prevent="filteredOnClickCell({ hour, minute, type: 'milk' })"
+          >
+            0
+          </p>
         </template>
       </li>
     </ul>
@@ -31,16 +57,24 @@
       onClickCell: Function,
     },
     data: () => ({
+      activeData: null,
       hours: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5],
       minutes: [0,15,30,45],
     }),
     methods: {
       filteredOnClickCell(data) {
+        this.activeData = data;
         if (typeof this.onClickCell === 'function') this.onClickCell(data);
       },
       padZero(num) {
         return num.toString().length === 1 ? `${num}0` : num;
-      }
+      },
+      matchedData(data) {
+        if (!this.activeData) return false;
+        return data.hour === this.activeData.hour &&
+          data.minute === this.activeData.minute &&
+          data.type === this.activeData.type;
+      },
     }
   }
 </script>
@@ -66,6 +100,9 @@
       &--time {
         background-color: #f5f5f5;
         font-size: 1rem;
+      }
+      &.is-active {
+        background-color: #ffffcc;
       }
     }
   }
