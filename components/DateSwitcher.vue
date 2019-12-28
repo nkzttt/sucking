@@ -13,9 +13,10 @@
   import format from 'date-fns/format';
   import addDays from 'date-fns/addDays';
   import subDays from 'date-fns/subDays';
+
   export default {
     computed: mapState({
-      date: state => new Date(state.store.dateStr)
+      date: state => new Date(state.store.dateStr),
     }),
     methods: {
       formatDate(date) {

@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <div class="header__date">
-        <date />
+        <date-switcher />
       </div>
       <div class="header__total">
         <total :count="3" :value="10" />
@@ -28,27 +28,53 @@
 </template>
 
 <script>
-import Date from '~/components/Date.vue'
-import Total from '~/components/Total.vue'
-import Notes from '~/components/Notes.vue'
-import Actions from '~/components/Actions.vue'
+  import DateSwitcher from '~/components/DateSwitcher.vue'
+  import Total from '~/components/Total.vue'
+  import Notes from '~/components/Notes.vue'
+  import Actions from '~/components/Actions.vue'
 
-export default {
-  components: {
-    Date,
-    Total,
-    Notes,
-    Actions,
-  },
-  methods: {
-    onClickAction(type) {
-      console.log(type);
+  export default {
+    components: {
+      DateSwitcher,
+      Total,
+      Notes,
+      Actions,
     },
-    onClickCell({hour, minute, type}) {
-      console.log({hour, minute, type});
+    data() {
+      return {
+        focusedData: null,
+      }
+    },
+    methods: {
+      onClickAction(type) {
+        if (!this.focusedData) return;
+
+        let value;
+        switch (type) {
+          case 'decrease':
+            value = -10;
+            break;
+          case 'increase':
+            value = 10;
+            break;
+          case 'moreIncrease':
+            value = 100;
+            break;
+          default:
+            break;
+        }
+        if (!value) return;
+
+        this.$store.commit('store/setNotes', {
+          value,
+          ...this.focusedData,
+        });
+      },
+      onClickCell({ hour, minute, type }) {
+        this.focusedData = { hour, minute, type };
+      }
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>
